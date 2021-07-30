@@ -1,3 +1,5 @@
 # gaming-directory 
 
-create config.env file and use npm start to run
+Create config.env file with URI, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET variables.
+
+To run use npm start to run
