@@ -7,9 +7,10 @@ module.exports = (passport) => {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: '/auth/google/callback'
-    },
-        async (accessToken, refreshToken, profile, done) => {
-            console.log(profile);
+    },  
+     async (accessToken, refreshToken, profile, done) => {
+            // console.log(profile);
+             if(profile._json.hd === "wynk.in"){
             const newUser = {
                 googleId: profile.id,
                 displayName: profile.displayName,
@@ -30,6 +31,10 @@ module.exports = (passport) => {
             } catch (err) {
                 console.log(err);
             }
+        }else{
+            res.render('/');
+            done(new Error("Invalid host domain"));
+        }
 
         }))
     passport.serializeUser((user, done) => {
