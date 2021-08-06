@@ -32,7 +32,6 @@ module.exports = (passport) => {
                 console.log(err);
             }
         }else{
-            res.render('/');
             done(new Error("Invalid host domain"));
         }
 
