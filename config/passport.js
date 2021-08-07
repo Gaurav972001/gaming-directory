@@ -34,7 +34,7 @@ module.exports = (passport) => {
             console.log(err);
           }
         } else {
-          return done(null, null, {message: 'Please use only wync domain email id'});
+          return done(null, null, {message: 'Please use only wync domain email'});
         }
       }
     )

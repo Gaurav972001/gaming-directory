@@ -10,7 +10,6 @@ router.get('/', ensureGuest, (req, res)=>{
         error: req.flash('error')
     })
 });
-
 //admin 
 //@route get /admin
 router.get('/admin', ensureAuth, async (req,res)=>{
