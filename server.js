@@ -9,6 +9,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const mongoose=require('mongoose');
 const connectDB = require('./config/db');
+const flash = require('connect-flash');
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.set('view engine', '.hbs');
 //passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 //static 
 app.use(express.static(path.join(__dirname, 'public')));
