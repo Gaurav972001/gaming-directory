@@ -6,7 +6,8 @@ const Game= require('../models/Game')
 //@route get /
 router.get('/', ensureGuest, (req, res)=>{
     res.render('login', {
-        layout : 'login'
+        layout : 'login',
+        error: req.flash('error')
     })
 });
 
