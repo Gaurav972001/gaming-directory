@@ -10,6 +10,14 @@ router.get('/', ensureGuest, (req, res)=>{
     })
 });
 
+//domain login error
+//@route get /domain-error
+router.get('/domain-error',(req,res)=>{
+    res.render('error/domain',{
+        layout: 'domain'
+    })
+})
+
 //admin 
 //@route get /admin
 router.get('/admin', ensureAuth, async (req,res)=>{

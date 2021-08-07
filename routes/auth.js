@@ -8,9 +8,10 @@ router.get('/google',passport.authenticate('google',{scope: ['profile','email']}
 
 //Google auth callback 
 //@route Get /auth/google/callback
-router.get('/google/callback',passport.authenticate('google', {failureRedirect: '/'}),
+router.get('/google/callback',passport.authenticate('google', {failureRedirect: '/domain-error'}),
 (req, res )=> {
     res.redirect('/admin');
+    // res.send('<script>alert("error")</script>')
 });
 
 //logout
