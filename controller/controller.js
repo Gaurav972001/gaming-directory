@@ -44,9 +44,10 @@ showAllGames= async (req, res) => {
 
   showEdit= async (req, res) => {
     try {
-      const game = await Game.findOne({
+      let game = await Game.findOne({
         _id: req.params.id,
-      }).lean()
+      })
+      game = game.toJSON();
   
       if (!game) {
         return res.render('error/404');
@@ -112,8 +113,9 @@ showAllGames= async (req, res) => {
 
   showSingleGame= async (req, res) => {
     try {
-      let game = await Game.findById(req.params.id).populate('user').lean()
-  
+      let game = await Game.findById(req.params.id).populate('user');
+      game = game.toJSON();
+      console.log(game);
       if (!game) {
         return res.render('error/404')
       }
