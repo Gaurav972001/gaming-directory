@@ -30,7 +30,7 @@ router.post('/', ensureAuth, async (req, res) => {
     console.error(err)
     res.render('error/form')
   }
-})
+});
 
 // Show all games
 // @route   GET /games
