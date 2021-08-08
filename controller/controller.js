@@ -156,7 +156,6 @@ userGames = async (req, res) => {
 
 function saveCover(game, coverEncoded) {
   if (coverEncoded == null) return false;
-  // console.log(coverEncoded);
   try {
     const cover = JSON.parse(coverEncoded);
     if (cover != null && imageMimeTypes.includes(cover.type)) {
