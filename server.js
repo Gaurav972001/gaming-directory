@@ -33,13 +33,15 @@ app.use(
 dotenv.config({ path: './config/config.env' });
 
 //sessions
+let today = new Date();
+let milliseconds = today.getMilliseconds();
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
     secure: false,
     saveUninitialized: false,
     cookie: {
-        maxAge  : new Date(Date.now() + 86400000), //24 hours
+        maxAge  : (milliseconds + 86400000), //24 hours
         expires : new Date(Date.now() + 86400000), //24 hours
     },
     store: MongoStore.create({ mongoUrl: process.env.URI })
