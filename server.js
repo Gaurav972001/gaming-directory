@@ -53,12 +53,12 @@ if (process.env.NODE_ENV === 'development') {
 };
 
 //handlebars helper
-const { formatDate, stripTags, truncate, select } = require('./helpers/hbs');
+const { formatDate, truncate, select, editIcon } = require('./helpers/hbs');
 
 //handlebars
 app.engine('.hbs', exphbs(
     { helpers: 
-        { formatDate, stripTags, truncate, select }, 
+        { formatDate, truncate, select, editIcon }, 
                         defaultLayout: 'main', extname: '.hbs' }));
 app.set('view engine', '.hbs');
 
@@ -66,6 +66,12 @@ app.set('view engine', '.hbs');
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+// Set global var
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null
+  next()
+})
 
 //static 
 app.use(express.static(path.join(__dirname, 'public')));

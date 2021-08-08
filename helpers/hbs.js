@@ -14,8 +14,16 @@ module.exports= {
         }
         return str
       },
-      stripTags: function (input) {
-        return input.replace(/<(?:.|\n)*?>/gm, '');
+      editIcon: function (gameUser, loggedUser, gameId, floating = true) {
+        if (gameUser._id.toString() == loggedUser._id.toString()) {
+          if (floating) {
+            return `<a href="/games/edit/${gameId}" class="btn-floating halfway-fab blue"><i class="fas fa-edit fa-small"></i></a>`
+          } else {
+            return `<a href="/games/edit/${gameId}"><i class="fas fa-edit"></i></a>`
+          }
+        } else {
+          return ''
+        }
       },
       select: function (selected, options) {
         return options

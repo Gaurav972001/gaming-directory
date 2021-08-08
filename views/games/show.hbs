@@ -1,7 +1,9 @@
   
 <div class="row">
     <div class="col s12 m8">
-        <h3>{{game.name}}</h3>
+        <h3>{{game.name}}
+            <small>{{{editIcon game.user user game._id false}}}</small>
+        </h3>
         <a href="/games/edit/{{_id}}" class="btn btn-float">
                     <i class="fas fa-edit"></i>
                 </a>
@@ -20,6 +22,9 @@
             </div>
             <div class="card-action">
                 <a href="{{game.link}}" target="_blank" id="game-link">PLAY GAME</a>
+            </div>
+            <div class="card-action">
+                <a href="/games/user/{{game.user._id}}">More From {{game.user.firstName}}</a>
             </div>
         </div>
     </div>

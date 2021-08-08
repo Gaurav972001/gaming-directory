@@ -20,15 +20,15 @@ router.post('/', ensureAuth, async (req, res) => {
     user: req.user.id,
     link: req.body.link
   })
-  saveCover(newgame, req.body.cover);
   try {
+    saveCover(newgame, req.body.cover);
     // req.body.user = req.user.id
     // await Game.create(req.body)
     newgame = await newgame.save();
     res.redirect('/admin')
   } catch (err) {
     console.error(err)
-    res.render('error/500')
+    res.render('error/form')
   }
 })
 
