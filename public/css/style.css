@@ -7,7 +7,14 @@ p {
     margin-top: 50px;
     text-align: center;
   }
-  
+
+  #text{
+    border-radius: 4px; 
+    outline:none;
+    resize: none;
+    height: 120px
+  }
+
   .btn-float {
     float: left;
     margin-right: 10px;

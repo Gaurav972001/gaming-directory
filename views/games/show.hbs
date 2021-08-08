@@ -7,19 +7,19 @@
                 </a>
         <div class="card story">
             <div class="card-content">
-                <span class="card-title">{{formatDate date 'MMMM Do YYYY, h:mm:ss a'}}</span>
-                {{{game.body}}}
+                <span class="card-title">{{formatDate game.createdAt 'MMMM Do YYYY, h:mm:ss a'}}</span>
+                {{{game.description}}}
             </div>
         </div>
     </div>
     <div class="col s12 m4">
         <div class="card center-align">
             <div class="card-content">
-                <span class="card-title">{{game.user.displayName}}</span>
-                <img src="{{game.user.image}}" class="circle responsive-img img-small">
+                <span class="card-title">User - {{game.user.displayName}}</span>
+                <img height="150" width="100" src="{{game.coverImagePath}}" class="responsive-img img-small">
             </div>
             <div class="card-action">
-                <a href="/games/user/{{game.user._id}}">More From {{game.user.firstName}}</a>
+                <a href="{{game.link}}" target="_blank" id="game-link">PLAY GAME</a>
             </div>
         </div>
     </div>

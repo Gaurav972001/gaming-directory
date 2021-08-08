@@ -1,6 +1,6 @@
 <h3>Add Game</h3>
 <div class="row">
-    <form action="/games" method="POST" class="col s12">
+    <form action="/games" method="POST" class="col s12" ">
         <div class="row">
             <div class="input-field">
                 <input type="text" id="title" name="name">
@@ -21,8 +21,20 @@
         <div class="row">
             <div class="input-field">
                 <h5>Add game description here:</h5>
-                <textarea id="body" name="body"></textarea>
+                <textarea id="text" name="description"></textarea>
             </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field">
+                <input type="text" id="link" name="link">
+                <label for="link">GAME LINK</label>
+            </div>
+        </div>
+
+        <div class="image-div">
+            <label for="image" id="image-lable">Upload Game Image: </label>
+            <input type="file" name="cover" class="filepond">
         </div>
 
         <div class="row">

@@ -14,7 +14,7 @@ const flash = require('connect-flash');
 const app = express();
 
 //body-parser
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ limit: '20mb',extended: false }));
 app.use(express.json());
 
 // Method override
@@ -37,7 +37,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-
+    cookie: {secure : false },
     store: MongoStore.create({ mongoUrl: process.env.URI })
 }))
 
