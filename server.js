@@ -14,7 +14,7 @@ const flash = require('connect-flash');
 const app = express();
 
 //body-parser
-app.use(express.urlencoded({ limit: '20mb',extended: false }));
+app.use(express.urlencoded({ limit: '16mb',extended: false }));
 app.use(express.json());
 
 // Method override
