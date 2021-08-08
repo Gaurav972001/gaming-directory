@@ -51,7 +51,7 @@ showEdit = async (req, res) => {
     if (!game) {
       return res.render("error/404");
     }
-
+    
     if (game.user != req.user.id) {
       res.redirect("/games");
     } else {
