@@ -13,6 +13,7 @@ router.get('/', ensureGuest, (req, res)=>{
 //admin 
 //@route get /admin
 router.get('/admin', ensureAuth, async (req,res)=>{
+    // console.log(req);
     try{
         const games= await Game.find({user: req.user.id}).lean();
         res.render('admin',{

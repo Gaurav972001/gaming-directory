@@ -36,8 +36,12 @@ dotenv.config({ path: './config/config.env' });
 app.use(session({
     secret: 'keyboard cat',
     resave: false,
+    secure: false,
     saveUninitialized: false,
-    cookie: {secure : false },
+    cookie: {
+        maxAge  : new Date(Date.now() + 86400000), //24 hours
+        expires : new Date(Date.now() + 86400000), //24 hours
+    },
     store: MongoStore.create({ mongoUrl: process.env.URI })
 }))
 
@@ -48,9 +52,8 @@ require('./config/passport')(passport);
 connectDB();
 
 //logger
-if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
-};
+
 
 //handlebars helper
 const { formatDate, truncate, select, editIcon } = require('./helpers/hbs');
