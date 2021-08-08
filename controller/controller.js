@@ -47,7 +47,7 @@ showEdit = async (req, res) => {
       _id: req.params.id,
     });
     game = game.toJSON();
-
+    // console.log(game);
     if (!game) {
       return res.render("error/404");
     }
@@ -79,10 +79,13 @@ updateGame = async (req, res) => {
         new: true,
         runValidators: true,
       });
-      saveCover(story, req.body.cover);
+      if(saveCover(story, req.body.cover)){
+      //saveCover(story, req.body.cover);
       await story.save();
-
       res.redirect("/admin");
+      }else{
+        res.redirect("/admin");
+      }
     }
   } catch (err) {
     console.error(err);
@@ -114,7 +117,7 @@ showSingleGame = async (req, res) => {
   try {
     let game = await Game.findById(req.params.id).populate("user");
     game = game.toJSON();
-    console.log(game);
+    // console.log(game);
     if (!game) {
       return res.render("error/404");
     }
@@ -152,11 +155,17 @@ userGames = async (req, res) => {
 };
 
 function saveCover(game, coverEncoded) {
-  if (coverEncoded == null) return;
-  const cover = JSON.parse(coverEncoded);
-  if (cover != null && imageMimeTypes.includes(cover.type)) {
-    game.coverImage = new Buffer.from(cover.data, "base64");
-    game.coverImageType = cover.type;
+  if (coverEncoded == null) return false;
+  // console.log(coverEncoded);
+  try {
+    const cover = JSON.parse(coverEncoded);
+    if (cover != null && imageMimeTypes.includes(cover.type)) {
+      game.coverImage = new Buffer.from(cover.data, "base64");
+      game.coverImageType = cover.type;
+    }
+    return true;
+  } catch (err) {
+      return false;
   }
 }
 
