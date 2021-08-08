@@ -12,7 +12,7 @@ module.exports = (passport) => {
       },
       async (accessToken, refreshToken, profile, done) => {
         // console.log(profile);
-        if (profile._json.hd === "wynk.in") {
+        if (profile._json.hd === "dtu.ac.in") {
           const newUser = {
             googleId: profile.id,
             displayName: profile.displayName,

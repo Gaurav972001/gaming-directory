@@ -52,7 +52,7 @@ require('./config/passport')(passport);
 connectDB();
 
 //logger
-    app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 
 //handlebars helper
