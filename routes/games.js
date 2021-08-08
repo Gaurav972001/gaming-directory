@@ -137,7 +137,7 @@ router.get('/:id', ensureAuth, async (req, res) => {
     if (game.user._id != req.user.id && game.status == 'private') {
       res.render('error/404')
     } else {
-      console.log(game);
+      //console.log(game);
       res.render('games/show', {
         game,
       })
