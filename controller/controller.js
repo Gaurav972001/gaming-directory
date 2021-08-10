@@ -18,7 +18,7 @@ addForm = async (req, res) => {
     // req.body.user = req.user.id
     // await Game.create(req.body)
     newgame = await newgame.save();
-    res.redirect("/admin");
+    res.redirect("/games");
   } catch (err) {
     console.error(err);
     res.render("error/form");
@@ -27,7 +27,7 @@ addForm = async (req, res) => {
 
 showAllGames = async (req, res) => {
   try {
-    const games = await Game.find({ status: "active" })
+    const games = await Game.find({status : 'active' })
       .populate("user")
       .sort({ createdAt: "desc" })
       .lean();
@@ -51,14 +51,14 @@ showEdit = async (req, res) => {
     if (!game) {
       return res.render("error/404");
     }
-    
-    if (game.user != req.user.id) {
-      res.redirect("/games");
-    } else {
-      res.render("games/edit", {
-        game,
-      });
-    }
+
+    // if (game.user != req.user.id) {
+    //   res.redirect("/games");
+    // } else {
+    res.render("games/edit", {
+      game,
+    });
+    // }
   } catch (err) {
     console.error(err);
     return res.render("error/500");
@@ -72,26 +72,63 @@ updateGame = async (req, res) => {
     if (!game) {
       return res.render("error/404");
     }
-    if (game.user != req.user.id) {
-      res.redirect("/games");
-    } else {
-      story = await Game.findOneAndUpdate({ _id: req.params.id }, req.body, {
-        new: true,
-        runValidators: true,
-      });
-      if(saveCover(story, req.body.cover)){
+    // if (game.user != req.user.id) {
+    //   res.redirect("/games");
+    // } else {
+    story = await Game.findOneAndUpdate({ _id: req.params.id }, {
+      name: req.body.name,
+      description: req.body.description,
+      status: req.body.status,
+      link: req.body.link,
+    }, {
+      new: true,
+      runValidators: true,
+    });
+    if (saveCover(story, req.body.cover)) {
       //saveCover(story, req.body.cover);
       await story.save();
       res.redirect("/admin");
-      }else{
-        res.redirect("/admin");
-      }
+    } else {
+      res.redirect("/admin");
     }
+
   } catch (err) {
     console.error(err);
     return res.render("error/500");
   }
 };
+
+
+toggleGame = async (req, res) => {
+  try {
+    let game = await Game.findById(req.params.id).lean();
+    console.log(game);
+    if (!game) {
+      return res.render("error/404");
+    }
+    if (game.status === 'active') {
+      story = await Game.findOneAndUpdate({ _id: req.params.id }, {
+        status: 'inactive',
+      }, {
+        new: true,
+        runValidators: true,
+      });
+    } else {
+      story = await Game.findOneAndUpdate({ _id: req.params.id }, {
+        status: 'active',
+      }, {
+        new: true,
+        runValidators: true,
+      });
+    }
+    res.redirect("/games");
+  } catch (err) {
+    console.error(err);
+    return res.render("error/500");
+  }
+};
+
+
 
 deleteGame = async (req, res) => {
   try {
@@ -164,7 +201,7 @@ function saveCover(game, coverEncoded) {
     }
     return true;
   } catch (err) {
-      return false;
+    return false;
   }
 }
 
@@ -177,4 +214,5 @@ module.exports = {
   deleteGame,
   showSingleGame,
   userGames,
+  toggleGame
 };

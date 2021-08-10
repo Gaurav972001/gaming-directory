@@ -25,6 +25,10 @@ router.get('/edit/:id', controller.showEdit);
 // @route   PUT /game/:id
 router.put('/:id', controller.updateGame);
 
+//toggle game status
+// @route   PUT /game/toggle/:id
+router.put('/toggle/:id', controller.toggleGame);
+
 // Delete game
 // @route   DELETE /games/:id
 router.delete('/:id', ensureAuth,controller.deleteGame);
