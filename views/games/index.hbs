@@ -8,7 +8,7 @@
 
                 <form action="/games/toggle/{{_id}}" method="POST">
                     <input type="hidden" name="_method" value="PUT">
-                    <input type="button" name="status" value="{{status}}" style="color:blue"
+                    <input type="button" id="toggle"  name="status" value="{{status}}" style="color:blue"
                         onclick="this.form.submit()">
                 </form>
 
