@@ -1,0 +1,21 @@
+<h3><i class="fas fa-gamepad"></i>Games Directory</h3>
+<div class="section">
+    <p class="lead">Choose your username</p>
+</div>
+
+<div class="divider"></div>
+
+<form action="/username" method="POST">
+    <div class="row">
+        <input type="text" id="username" name="username" placeholder="ENTER YOUR USERNAME" style="text-align: center;" maxlength="15">
+    </div>
+
+    <div class="row">
+        <input type="submit" value="SUBMIT" class="btn green">
+    </div>
+</form>
+<div class="divider"></div>
+
+{{#if message}}
+<div style="background-color: red;">{{message.message}}</div>
+{{/if}}

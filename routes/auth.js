@@ -10,7 +10,12 @@ router.get('/google',passport.authenticate('google',{scope: ['profile','email']}
 //@route Get /auth/google/callback
 router.get('/google/callback',passport.authenticate('google', {failureRedirect: '/', failureFlash : true}),
 (req, res )=> {
-    res.redirect('/admin');
+    if(req.user.username){
+        res.redirect('/admin');
+    }else{
+    // console.log(req)
+    res.redirect('/username');
+    }
 });
 
 //logout

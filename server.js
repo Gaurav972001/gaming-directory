@@ -4,48 +4,63 @@ const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const passport = require('passport');
-const methodOverride=require('method-override');
+const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const flash = require('connect-flash');
+const cookieParser = require('cookie-parser')
+
 
 const app = express();
 
 //body-parser
-app.use(express.urlencoded({ limit: '16mb',extended: false }));
+app.use(express.urlencoded({ limit: '16mb', extended: false }));
 app.use(express.json());
 
 // Method override
 app.use(
-    methodOverride(function (req, res) {
-      if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-        // look in urlencoded POST bodies and delete it
-        let method = req.body._method;
-        delete req.body._method;
-        return method;
-      }
-    })
-  );
+  methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+      // look in urlencoded POST bodies and delete it
+      let method = req.body._method;
+      delete req.body._method;
+      return method;
+    }
+  })
+);
 
 //Load config
 dotenv.config({ path: './config/config.env' });
 
 //sessions
+app.use(cookieParser('keyboard cat'));
 let today = new Date();
 let milliseconds = today.getMilliseconds();
 app.use(session({
-    secret: 'keyboard cat',
-    resave: false,
-    secure: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge  : (milliseconds + 86400000), //24 hours
-        expires : new Date(Date.now() + 86400000), //24 hours
-    },
-    store: MongoStore.create({ mongoUrl: process.env.URI })
+  secret: 'keyboard cat',
+  resave: false,
+  secure: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: (milliseconds + 86400000), //24 hours
+    expires: new Date(Date.now() + 86400000), //24 hours
+  },
+  store: MongoStore.create({ mongoUrl: process.env.URI })
 }))
+
+//flash message middleware
+app.use((req, res, next)=>{
+  res.locals.message = req.session.message
+  delete req.session.message
+  next()
+})
+
+//mongoose error fix
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 
 //passport config
 require('./config/passport')(passport);
@@ -62,9 +77,11 @@ const { formatDate, truncate, select, editIcon } = require('./helpers/hbs');
 
 //handlebars
 app.engine('.hbs', exphbs(
-    { helpers: 
-        { formatDate, truncate, select, editIcon }, 
-                        defaultLayout: 'main', extname: '.hbs' }));
+  {
+    helpers:
+      { formatDate, truncate, select, editIcon },
+    defaultLayout: 'main', extname: '.hbs'
+  }));
 app.set('view engine', '.hbs');
 
 //passport middleware
